@@ -1,0 +1,7 @@
+#scoreTable td, th{
+    border: solid black 1px;
+    padding: 10px 10px;
+}
+#scoreTable{
+    border-collapse: collapse;
+}

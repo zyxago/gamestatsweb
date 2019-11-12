@@ -1,0 +1,52 @@
+#root{
+    display: grid;
+    grid-template-rows: 3vw 1fr;
+    grid-template-areas: ". . ." 
+                        "wrapperL content wrapperR";
+}
+
+#wrapper-left, #wrapper-right{
+    background-image: url("../images/pingPong.jpg");
+    background-repeat: no-repeat; 
+    background-size: 100%;
+}
+
+#wrapper-left{
+    grid-area: wrapperL;
+
+}
+
+#wrapper-right{
+    grid-area: wrapperR;
+}
+
+#container{
+    grid-area: content;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: rgb(240, 240, 240);
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: 10vw 1fr 10vw;
+    grid-template-rows: 120px 1fr 50px;
+    grid-template-areas: "header header header"
+                         "nav content ."
+                         "footer footer footer";
+}
+
+header{
+    grid-area: header;
+}
+
+nav{
+    grid-area: nav;
+    justify-self: center;
+}
+
+#mainContent{
+    grid-area: content;
+    justify-self: center;
+}
+
+footer{
+    grid-area: footer;
+}

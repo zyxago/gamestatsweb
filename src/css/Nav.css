@@ -1,0 +1,24 @@
+nav{
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+}
+nav>ul{
+    margin: 0;
+    padding: 0;
+}
+
+nav>ul>li{
+    list-style-type: none;
+    padding: 12px 15px;
+    transition: .1s background-color;
+}
+nav>ul>li:first-child{
+    border-radius: 25px 25px 0 0;
+}
+nav>ul>li:last-child{
+    border-radius: 0 0 25px 25px;
+}
+
+nav>ul>li:hover{
+ background-color: lightgray;
+}
