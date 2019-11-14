@@ -1,7 +1,7 @@
-#playerTable td, #playerTable th{
+#matchTable td, #matchTable th{
     border: solid black 1px;
     padding: 10px 10px;
 }
-#playerTable{
+#matchTable{
     border-collapse: collapse;
 }

@@ -6,14 +6,12 @@
 }
 
 #wrapper-left, #wrapper-right{
-    background-image: url("../images/pingPong.jpg");
     background-repeat: no-repeat; 
     background-size: 100%;
 }
 
 #wrapper-left{
     grid-area: wrapperL;
-
 }
 
 #wrapper-right{

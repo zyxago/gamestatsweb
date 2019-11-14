@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {verifyAuthentication} from "../authenticate";
+import { verifyAuthentication } from "../logic/authenticate";
 import "../../css/Nav.css";
 
-export default function Nav({ authToken }) {
+export default function Nav({ authToken, popupNav }) {
     return (
         <nav>
             <ul>
                 <li><Link to="/players">Spelare</Link></li>
-                <li><Link to="/games">Matcher</Link></li>
-                {verifyAuthentication(authToken) && showAdminOptions()}
+                <li><Link to="/matches">Matcher</Link></li>
+                {verifyAuthentication(authToken) ? showAdminOptions() : <li onClick={(e) => console.log(e.target)}>Logga In</li>}
             </ul>
         </nav>
     )
@@ -21,30 +21,22 @@ export default function Nav({ authToken }) {
         console.log(path);
         switch (path) {
             case "/players/playername":
-                links.push(<li>Lägg till match</li>)
-                links.push(<li>Ta bort match</li>)
-                links.push(<li>Redigera match</li>)
-                links.push(<li>Ta bort spelare</li>)
-                links.push(<li>Redigera Spelare</li>)
-                break;
-            case "/games/1":
-                links.push(<li>Ta bort match</li>)
-                links.push(<li>Redigera match</li>)
+                links.push(<li id="addMatch" onClick={popupNav}>Lägg till match</li>)
+                links.push(<li id="removePlayer" onClick={popupNav}>Ta bort spelare</li>)
+                links.push(<li id="editPlayer" onClick={popupNav}>Redigera Spelare</li>)
                 break;
             case "/players":
-                links.push(<li onClick={(e)=>console.log(e.target)}>Lägg till spelare</li>)
-                links.push(<li onClick={(e)=>console.log(e.target)}>Ta bort spelare</li>)
-                links.push(<li onClick={(e)=>console.log(e.target)}>Redigera Spelare</li>)
+                links.push(<li id="addPlayer" onClick={popupNav}>Lägg till spelare</li>)
                 break;
-            case "/games":
-                links.push(<li>Lägg till match</li>)
-                links.push(<li>Ta bort match</li>)
-                links.push(<li>Redigera match</li>)
+            case "/matches":
+                links.push(<li id="addMatch" onClick={popupNav}>Lägg till match</li>)
                 break;
             default:
                 break;
         }
-        links.push(<li onClick={(e)=>console.log(e.target)}>Logga ut</li>);
+        links.push(<li id="removeMatch" onClick={popupNav}>Ta bort match</li>)
+        links.push(<li id="editMatch" onClick={popupNav}>Redigera match</li>)
+        links.push(<li id="logout" onClick={popupNav}>Logga Ut</li>);
         return links;
     }
 }
