@@ -8,7 +8,7 @@ import {
 import Nav from "./Nav";
 import Header from "./Header";
 import Footer from "./Footer";
-import Players from "./Players";
+import Teams from "./Teams";
 import Matches from "./Matches";
 import "../../css/App.css";
 import Popup from "./Popup";
@@ -21,6 +21,7 @@ export default function App() {
 
     let [popupShow, setPopupShow] = React.useState(false);
     let [popupLocation, setPopupLocation] = React.useState("");
+    let [authToken, setAuthToken] = React.useState(undefined);
 
     function popupNavigation(e) {
         let location = e.target.id;
@@ -33,13 +34,13 @@ export default function App() {
             <div id="wrapper-left"></div>
             <div id="container">
                 <Header title="Spelare" />
-                <Nav authToken="W.I.P" popupNav={popupNavigation} />
+                <Nav authToken={authToken} popupNav={popupNavigation} />
                 <div id="mainContent">
-                    <Popup show={popupShow} location={popupLocation} setShow={setPopupShow} />
+                    <Popup show={popupShow} location={popupLocation} setShow={setPopupShow} setAuthToken={setAuthToken} />
                     <Switch>
-                        <Route path="/players"><Players /></Route>
+                        <Route path="/teams"><Teams /></Route>
                         <Route path="/matches"><Matches /></Route>
-                        <Route><Redirect to="/players" /></Route>
+                        <Route><Redirect to="/teams" /></Route>
                     </Switch>
                 </div>
                 <Footer />

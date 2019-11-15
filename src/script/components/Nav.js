@@ -3,32 +3,33 @@ import { Link } from "react-router-dom";
 import { verifyAuthentication } from "../logic/authenticate";
 import "../../css/Nav.css";
 
-export default function Nav({ authToken, popupNav }) {
+export default function Nav({authToken, popupNav }) {
+
+    let [currentPage, setCurrentPage] = React.useState("teams");
+
     return (
         <nav>
             <ul>
-                <li><Link to="/players">Spelare</Link></li>
-                <li><Link to="/matches">Matcher</Link></li>
-                {verifyAuthentication(authToken) ? showAdminOptions() : <li onClick={(e) => console.log(e.target)}>Logga In</li>}
+                <li onClick={() => setCurrentPage("teams")}><Link to="/teams">Spelare</Link></li>
+                <li onClick={() => setCurrentPage("matches")}><Link to="/matches">Matcher</Link></li>
+                {verifyAuthentication(authToken) ? showAdminOptions(currentPage) : <li id="login" onClick={popupNav}>Logga In</li>}
             </ul>
         </nav>
     )
 
 
-    function showAdminOptions() {
+    function showAdminOptions(currentPage) {
         let links = [];
-        let path = window.location.pathname;
-        console.log(path);
-        switch (path) {
-            case "/players/playername":
+        switch (currentPage) {
+            case "players/playername":
                 links.push(<li id="addMatch" onClick={popupNav}>Lägg till match</li>)
-                links.push(<li id="removePlayer" onClick={popupNav}>Ta bort spelare</li>)
-                links.push(<li id="editPlayer" onClick={popupNav}>Redigera Spelare</li>)
+                links.push(<li id="removeTeam" onClick={popupNav}>Ta bort spelare</li>)
+                links.push(<li id="editTeam" onClick={popupNav}>Redigera Spelare</li>)
                 break;
-            case "/players":
-                links.push(<li id="addPlayer" onClick={popupNav}>Lägg till spelare</li>)
+            case "teams":
+                links.push(<li id="addTeam" onClick={popupNav}>Lägg till spelare</li>)
                 break;
-            case "/matches":
+            case "matches":
                 links.push(<li id="addMatch" onClick={popupNav}>Lägg till match</li>)
                 break;
             default:
