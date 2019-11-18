@@ -18,10 +18,11 @@ import Popup from "./Popup";
 
 
 export default function App() {
-
     let [popupShow, setPopupShow] = React.useState(false);
     let [popupLocation, setPopupLocation] = React.useState("");
     let [authToken, setAuthToken] = React.useState(undefined);
+    let [currentPage, setCurrentPage] = React.useState("teams");
+    let [title, setTitle] = React.useState("Lag");
 
     function popupNavigation(e) {
         let location = e.target.id;
@@ -33,13 +34,13 @@ export default function App() {
         <Router>
             <div id="wrapper-left"></div>
             <div id="container">
-                <Header title="Spelare" />
-                <Nav authToken={authToken} popupNav={popupNavigation} />
+                <Header title={title} />
+                <Nav authToken={authToken} popupNav={popupNavigation} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
                 <div id="mainContent">
                     <Popup show={popupShow} location={popupLocation} setShow={setPopupShow} setAuthToken={setAuthToken} />
                     <Switch>
-                        <Route path="/teams"><Teams /></Route>
-                        <Route path="/matches"><Matches /></Route>
+                        <Route path="/teams"><Teams setCurrentpage={setCurrentPage}/></Route>
+                        <Route path="/matches"><Matches setCurrentpage={setCurrentPage} /></Route>
                         <Route><Redirect to="/teams" /></Route>
                     </Switch>
                 </div>

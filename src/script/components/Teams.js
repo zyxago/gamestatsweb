@@ -1,37 +1,58 @@
 import React from "react";
 import { getTeams } from "../logic/team";
+import Team from "./Team";
+import {Table} from "react-bulma-components";
+import {
+    Route,
+    Switch,
+    Link,
+    Redirect
+} from "react-router-dom";
 import "../../css/Team.css";
 
-export default function Teams(props) {
+export default function Teams({setCurrentpage}) {
 
+    let [clickedTeam, setClickedTeam] = React.useState(undefined);
     let [tableContent, setTableContent] = React.useState(undefined);
-    getContent(setTableContent);
-    return (
-        <main id="teams">
-            <table id="playerTable">
-                <thead>
-                    <tr>
-                        <th>Spelare</th>
-                        <th>Spelade Matcher</th>
-                        <th>Vunna Matcher</th>
-                        <th>Vinstfrekvens</th>
-                        <th>Vunna sets</th>
-                        <th>Förlorade sets</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tableContent}
-                </tbody>
-            </table>
-        </main>
-    )
+    if (tableContent === undefined) {
+        getContent(setTableContent);
+    }
 
+    function navigateToTeam(team){
+        setClickedTeam(team);
+        setCurrentpage(`teams/${team.id}`);
+    }
+
+    //Display all teams
+    function teamsTable() {
+        return (
+            <main>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Spelare</th>
+                            <th>Spelade Matcher</th>
+                            <th>Vunna Matcher</th>
+                            <th>Vinstfrekvens</th>
+                            <th>Vunna sets</th>
+                            <th>Förlorade sets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tableContent}
+                    </tbody>
+                </Table>
+            </main>
+        )
+    }
+
+    //Gets teamTable content from DB
     async function getContent(setTableContent) {
         const teams = await getTeams();
         const teamTable = teams.map((team) => {
             return (
-                <tr>
-                    <td>{team.name}</td>
+                <tr key={team.id}>
+                    <td><Link onClick={() => navigateToTeam(team)} to={`/teams/${team.id}`}>{team.name}</Link></td>
                     <td>{team.matchesPlayed}</td>
                     <td>{team.matchesWon}</td>
                     <td>{team.matchesPlayed && (team.matchesWon / team.matchesPlayed) * 100}%</td>
@@ -40,6 +61,14 @@ export default function Teams(props) {
                 </tr>
             )
         });
-        setTableContent(teamTable)
+        setTableContent(teamTable);
     }
+
+    return (
+        <Switch>
+            <Route exact path="/teams">{teamsTable}</Route>
+            {clickedTeam && <Route path="/teams/"><Team team={clickedTeam} /></Route>}
+            <Route><Redirect to="/teams"/></Route>
+        </Switch>
+    )
 }

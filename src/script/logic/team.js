@@ -1,4 +1,4 @@
-import fetcher from "./dataRetriver";
+import fetcher from "./dataHandler";
 
 export class Team{
     constructor(id, name, wins, losses, matchesPlayed, matchesWon){
