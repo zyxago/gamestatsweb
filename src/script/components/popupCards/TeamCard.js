@@ -6,18 +6,31 @@ export function AddTeamCard() {
         <form>
             <p><label htmlFor="name">Namn</label>
                 <input type="text" name="name" /></p>
-            <input type="submit" value="Lägg till" />
+            <button>Lägg till</button>
         </form>
     )
 }
 
-export function RemoveTeamCard() {
+export function RemoveTeamCard({ clickHandler, teams }) {
+    let team;
+
+    function displayTeams(teams) {
+        return teams.map(() => {
+            return(
+            <option>{team.name}</option>
+            )
+        })
+    }
+
     return (
         <form>
             <p><label htmlFor="name">Namn</label>
-                <input type="text" name="name" /></p>
+                <section>
+                    {displayTeams(teams)}
+                </section>
+            </p>
             <p>Matcher spelade: 1</p>
-            <input type="submit" value="Ta bort" />
+            <button onClick={() => clickHandler(team)}>Ta bort</button>
         </form>
     )
 }
@@ -28,7 +41,7 @@ export function EditTeamCard() {
             <p>Namn: Erik</p>
             <p><label htmlFor="name">Nytt namn:</label>
                 <input type="text" name="name" /></p>
-            <input type="submit" value="Redigera" />
+            <button>Redigera</button>
         </form>
     )
 }
