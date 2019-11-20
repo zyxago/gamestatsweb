@@ -24,3 +24,15 @@ export async function getTeam(id){
     const team = await fetcher(`team/${id}`);
     return new Team(team.id, team.name, team.wins, team.losses, team.matchesPlayed, team.matchesWon);
 }
+
+export async function addTeam(name){
+
+}
+
+export async function removeTeam(team){
+
+}
+
+export async function editTeam(team){
+    
+}

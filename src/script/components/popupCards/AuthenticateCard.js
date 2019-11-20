@@ -16,7 +16,7 @@ export function LoginCard(props) {
                 <input id="username" type="text" name="username" /></p>
             <p><label htmlFor="password">Lösenord</label>
                 <input id="password" type="password" name="password" /></p>
-            <input onClick={setToken} type="submit" value="Logga in" />
+            <button onClick={setToken}>Logga in</button>
         </form>
     )
 }
@@ -29,7 +29,7 @@ export function LogoutCard(props) {
 
     return (
         <form>
-            <input onClick={unsetToken} type="submit" value="Logga ut" />
+            <button onClick={unsetToken}>Logga ut</button>
         </form>
     )
 }

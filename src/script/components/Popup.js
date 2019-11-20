@@ -5,7 +5,7 @@ import { LoginCard, LogoutCard } from "./popupCards/AuthenticateCard";
 import { AddTeamCard, EditTeamCard, RemoveTeamCard } from "./popupCards/TeamCard";
 import { AddMatchCard, EditMatchCard, RemoveMatchCard } from "./popupCards/MatchCard";
 
-export default function Popup({ show, location, setShow, setAuthToken}) {
+export default function Popup({ show, location, setShow, setAuthToken }) {
 
     let title;
     let content;
@@ -14,11 +14,11 @@ export default function Popup({ show, location, setShow, setAuthToken}) {
         switch (location) {
             case "login":
                 title = "Logga in";
-                content = <LoginCard setToken={setAuthToken}/>;
+                content = <LoginCard setToken={setAuthToken} />;
                 break;
             case "logout":
                 title = "Logga ut";
-                content = <LogoutCard unsetToken={setAuthToken}/>;
+                content = <LogoutCard unsetToken={setAuthToken} />;
                 break;
             case "editMatch":
                 title = "Redigera Match";
@@ -45,7 +45,7 @@ export default function Popup({ show, location, setShow, setAuthToken}) {
                 content = <RemoveTeamCard />
                 break;
             default:
-            break;
+                break;
         }
     }
 
@@ -59,9 +59,7 @@ export default function Popup({ show, location, setShow, setAuthToken}) {
                 </Modal.Card.Head>
                 <Modal.Card.Body>
                     <Content>
-                        <form>
-                            {content}
-                        </form>
+                        {content}
                     </Content>
                 </Modal.Card.Body>
                 <Modal.Card.Foot />

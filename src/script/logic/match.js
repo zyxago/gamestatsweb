@@ -34,3 +34,16 @@ export async function getTeamMatches(id) {
     }
     return matches;
 }
+
+export async function addMatch(name){
+
+}
+
+export async function removeMatch(Match){
+
+}
+
+export async function editMatch(match){
+    console.log("Edit match was called");
+    console.log(match);
+}

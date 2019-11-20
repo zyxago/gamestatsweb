@@ -1,34 +1,35 @@
 import React from "react";
 
 
-export function AddTeamCard() {
+export function AddTeamCard({clickHandler}) {
     return (
         <form>
             <p><label htmlFor="name">Namn</label>
                 <input type="text" name="name" /></p>
-            <input type="submit" value="Lägg till" />
+            <button onClick={()=>clickHandler}>Lägg till</button>
         </form>
     )
 }
 
-export function RemoveTeamCard() {
+export function RemoveTeamCard({clickHandler, teams}) {
+
     return (
         <form>
             <p><label htmlFor="name">Namn</label>
-                <input type="text" name="name" /></p>
+                <input type="text" name="name"/></p>
             <p>Matcher spelade: 1</p>
-            <input type="submit" value="Ta bort" />
+            <button>Ta bort</button>
         </form>
     )
 }
 
-export function EditTeamCard() {
+export function EditTeamCard({clickHandler, teams}) {
     return (
         <form>
             <p>Namn: Erik</p>
             <p><label htmlFor="name">Nytt namn:</label>
                 <input type="text" name="name" /></p>
-            <input type="submit" value="Redigera" />
+            <button>Redigera</button>
         </form>
     )
 }

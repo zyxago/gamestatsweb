@@ -37,7 +37,7 @@ export default function App() {
                 <Header title={title} />
                 <Nav authToken={authToken} popupNav={popupNavigation} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
                 <div id="mainContent">
-                    <Popup show={popupShow} location={popupLocation} setShow={setPopupShow} setAuthToken={setAuthToken} />
+                    <Popup show={popupShow} location={popupLocation} setShow={setPopupShow} setAuthToken={setAuthToken}/>
                     <Switch>
                         <Route path="/teams"><Teams setCurrentpage={setCurrentPage}/></Route>
                         <Route path="/matches"><Matches setCurrentpage={setCurrentPage} /></Route>
