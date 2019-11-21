@@ -1,11 +1,16 @@
 import React from "react";
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Modal, Content } from 'react-bulma-components';
-import { LoginCard, LogoutCard } from "./popupCards/AuthenticateCard";
-import { AddTeamCard, EditTeamCard, RemoveTeamCard } from "./popupCards/TeamCard";
-import { AddMatchCard, EditMatchCard, RemoveMatchCard } from "./popupCards/MatchCard";
+import LogoutCard from "./popupCards/AuthCards/Logout";
+import LoginCard from "./popupCards/AuthCards/Login";
+import RemoveTeamCard from "./popupCards/TeamCards/RemoveTeam";
+import EditTeamCard from "./popupCards/TeamCards/EditTeam";
+import AddTeamCard from "./popupCards/TeamCards/AddTeam";
+import AddMatchCard from "./popupCards/MatchCards/AddMatch";
+import RemoveMatchCard from "./popupCards/MatchCards/RemoveMatch";
+import EditMatchCard from "./popupCards/MatchCards/EditMatch";
 
-export default function Popup({ show, location, setShow, setAuthToken }) {
+export default function Popup({ show, location, setShow, setAuthToken, authToken }) {
 
     let title;
     let content;
@@ -22,27 +27,27 @@ export default function Popup({ show, location, setShow, setAuthToken }) {
                 break;
             case "editMatch":
                 title = "Redigera Match";
-                content = <EditMatchCard />;
+                content = <EditMatchCard authToken={authToken} />;
                 break;
             case "addMatch":
                 title = "Lägg till match";
-                content = <AddMatchCard />;
+                content = <AddMatchCard authToken={authToken} />;
                 break;
             case "removeMatch":
                 title = "Ta bort match";
-                content = <RemoveMatchCard />;
+                content = <RemoveMatchCard authToken={authToken} />;
                 break;
             case "editTeam":
                 title = "Redigera team";
-                content = <EditTeamCard />;
+                content = <EditTeamCard authToken={authToken} />;
                 break;
             case "addTeam":
                 title = "Lägg till team";
-                content = <AddTeamCard />
+                content = <AddTeamCard authToken={authToken} />
                 break;
             case "removeTeam":
                 title = "Ta bort team";
-                content = <RemoveTeamCard />
+                content = <RemoveTeamCard authToken={authToken} />
                 break;
             default:
                 break;
