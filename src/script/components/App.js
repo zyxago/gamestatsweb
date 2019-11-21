@@ -35,12 +35,12 @@ export default function App() {
             <div id="wrapper-left"></div>
             <div id="container">
                 <Header title={title} />
-                <Nav authToken={authToken} popupNav={popupNavigation} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+                <Nav authToken={authToken} popupNav={popupNavigation} currentPage={currentPage} setCurrentPage={setCurrentPage} setTitle={setTitle} />
                 <div id="mainContent">
-                    <Popup show={popupShow} location={popupLocation} setShow={setPopupShow} setAuthToken={setAuthToken}/>
+                    <Popup show={popupShow} location={popupLocation} setShow={setPopupShow} setAuthToken={setAuthToken} authToken={authToken} setTitle={setTitle} />
                     <Switch>
-                        <Route path="/teams"><Teams setCurrentpage={setCurrentPage}/></Route>
-                        <Route path="/matches"><Matches setCurrentpage={setCurrentPage} /></Route>
+                        <Route path="/teams"><Teams setCurrentpage={setCurrentPage} setTitle={setTitle} /></Route>
+                        <Route path="/matches"><Matches setCurrentpage={setCurrentPage} setTitle={setTitle} /></Route>
                         <Route><Redirect to="/teams" /></Route>
                     </Switch>
                 </div>

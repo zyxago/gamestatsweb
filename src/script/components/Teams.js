@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import "../../css/Team.css";
 
-export default function Teams({setCurrentpage}) {
+export default function Teams({setCurrentpage, setTitle}) {
 
     let [clickedTeam, setClickedTeam] = React.useState(undefined);
     let [tableContent, setTableContent] = React.useState(undefined);
@@ -21,6 +21,7 @@ export default function Teams({setCurrentpage}) {
     function navigateToTeam(team){
         setClickedTeam(team);
         setCurrentpage(`teams/${team.id}`);
+        setTitle(team.name);
     }
 
     //Display all teams
@@ -34,8 +35,8 @@ export default function Teams({setCurrentpage}) {
                             <th>Spelade Matcher</th>
                             <th>Vunna Matcher</th>
                             <th>Vinstfrekvens</th>
-                            <th>Vunna sets</th>
-                            <th>Förlorade sets</th>
+                            <th>Poäng Vunna</th>
+                            <th>Poäng Förlorade</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,7 +56,7 @@ export default function Teams({setCurrentpage}) {
                     <td><Link onClick={() => navigateToTeam(team)} to={`/teams/${team.id}`}>{team.name}</Link></td>
                     <td>{team.matchesPlayed}</td>
                     <td>{team.matchesWon}</td>
-                    <td>{team.matchesPlayed && (team.matchesWon / team.matchesPlayed) * 100}%</td>
+                    <td>{team.matchesPlayed && Math.round((team.matchesWon / team.matchesPlayed) * 100)}%</td>
                     <td>{team.wins}</td>
                     <td>{team.losses}</td>
                 </tr>

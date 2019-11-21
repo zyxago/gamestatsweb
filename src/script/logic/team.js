@@ -1,4 +1,4 @@
-import fetcher from "./dataHandler";
+import {fetcher, requestHandler} from "./dataHandler";
 
 export class Team{
     constructor(id, name, wins, losses, matchesPlayed, matchesWon){
@@ -25,14 +25,17 @@ export async function getTeam(id){
     return new Team(team.id, team.name, team.wins, team.losses, team.matchesPlayed, team.matchesWon);
 }
 
-export async function addTeam(name){
-
+export async function addTeam(team, authToken){
+    let status = await requestHandler(`team`, "POST", authToken, team);
+    console.log(status);
 }
 
-export async function removeTeam(team){
-
+export async function removeTeam(id, authToken){
+    let status = await requestHandler(`team/${id}`, "DELETE", authToken);
+    console.log(status);
 }
 
-export async function editTeam(team){
-    
+export async function editTeam(team, authToken){
+    let status = await requestHandler(`team`, "PUT", authToken, team);
+    console.log(status);
 }

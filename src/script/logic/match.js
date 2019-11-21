@@ -1,8 +1,7 @@
-import fetcher from "./dataHandler";
+import {fetcher, requestHandler} from "./dataHandler";
 
 export class Match {
     constructor(gameId, homeId, homeScore, homeTeam, awayId, awayScore, awayTeam, winner) {
-
         this.gameId = gameId;
         this.homeId = homeId;
         this.homeScore = homeScore;
@@ -16,34 +15,37 @@ export class Match {
 
 export async function getMatches() {
     let matches = [];
-    for (const match of await fetcher("games")) {
+    for (const match of await fetcher("matches")) {
         matches.push(new Match(match.gameId, match.homeId, match.homeScore, match.homeTeam, match.awayId, match.awayScore, match.awayTeam, match.winner));
     }
     return matches;
 }
 
 export async function getMatch(id) {
-    let match = await fetcher(`game/${id}`);
+    let match = await fetcher(`match/${id}`);
     return new Match(match.gameId, match.homeId, match.homeScore, match.homeTeam, match.awayId, match.awayScore, match.awayTeam, match.winner);
 }
 
 export async function getTeamMatches(id) {
     let matches = [];
-    for (const match of await fetcher(`teamGames/${id}`)) {
+    for (const match of await fetcher(`teamMatches/${id}`)) {
         matches.push(new Match(match.gameId, match.homeId, match.homeScore, match.homeTeam, match.awayId, match.awayScore, match.awayTeam, match.winner));
     }
     return matches;
 }
 
-export async function addMatch(name){
-
+export async function addMatch(match, authToken){
+    let status = await requestHandler(`match`, "POST", authToken, match);
+    console.log(status);
 }
 
-export async function removeMatch(Match){
-
+export async function removeMatch(id, authToken){
+    let status = await requestHandler(`match/${id}`, "DELETE", authToken);
+    console.log(status);
 }
 
-export async function editMatch(match){
-    console.log("Edit match was called");
-    console.log(match);
+export async function editMatch(match, authToken){
+    console.log(JSON.stringify(match));
+    let status = await requestHandler(`match`, "PUT", authToken, match);
+    console.log(status);
 }

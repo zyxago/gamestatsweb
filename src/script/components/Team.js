@@ -14,7 +14,7 @@ export default function Team({ team }) {
         const matches = await getTeamMatches(team.id);
         let JSXmatches = matches.map((match) => {
             return (
-                <tr>
+                <tr key={match.gameId}>
                     <td>{match.homeTeam}</td>
                     <td>{match.awayTeam}</td>
                     <td>bo5</td>
@@ -40,15 +40,13 @@ export default function Team({ team }) {
 
         function calcSetsPlayed(matches, teamName) {
             let setsPlayed = 0;
-            matches.map((match) => {
-                setsPlayed += match.homeScore + match.awayScore;
-            })
+            matches.map((match) => setsPlayed += match.homeScore + match.awayScore)
             return setsPlayed;
         }
 
         function setsWinrate(matches, setsPlayed, teamName) {
             let wonSets = 0;
-            matches.map((match) => {
+            for (const match of matches) {
                 if (match.winner === teamName) {
                     if (match.homeTeam === teamName) {
                         wonSets += match.homeScore;
@@ -57,7 +55,7 @@ export default function Team({ team }) {
                         wonSets += match.awayScore;
                     }
                 }
-            })
+            }
             return Math.round((wonSets / setsPlayed) * 100);
         }
 
@@ -69,12 +67,12 @@ export default function Team({ team }) {
                 <caption>Matcher spelade</caption>
                 <thead>
                     <tr>
-                        <th>Spelare 1</th>
-                        <th>Spelare 2</th>
+                        <th>Hemma lag</th>
+                        <th>Borta lag</th>
                         <th>Typ</th>
-                        <th>Sets spelade</th>
-                        <th>Sets Vunna</th>
-                        <th>Sets Förlorade</th>
+                        <th>Totala Mängden Poäng</th>
+                        <th>Vunna Poäng</th>
+                        <th>Förlorade Poäng</th>
                         <th>Vinnare</th>
                         <th>Match id</th>
                     </tr>

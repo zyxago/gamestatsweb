@@ -1,20 +1,17 @@
-export async function verifyAuthentication(authToken) {
+export async function verifyAuthentication(authToken, setVerification) {
+    console.log("From verifier: " + authToken);
     const res = await fetch("/authenticate/token", {
         method: "GET",
         headers: {
             'Authorization': authToken
         }
     })
-    const data = await res.status;
-    if(data === 200){
-        return true;
-    }
-    return false;
+    const data = await res.ok;
+    setVerification(data);
 }
 
 export async function getAuthToken(username, password) {
     const authString = `Basic ${btoa(username + ":" + password)}`;
-
     const res = await fetch("/authenticate", {
         method: "GET",
         headers: {

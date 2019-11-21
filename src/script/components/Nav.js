@@ -3,14 +3,24 @@ import { Link } from "react-router-dom";
 import { verifyAuthentication } from "../logic/authenticate";
 import "../../css/Nav.css";
 
-export default function Nav({ authToken, popupNav, currentPage, setCurrentPage }) {
+export default function Nav({ authToken, popupNav, currentPage, setCurrentPage, setTitle }) {
+
+    let [authVerification, setAuthVerification] = React.useState(undefined);
+    verifyAuthentication(authToken, setAuthVerification);
+    
+    function changePage(page, title) {
+        setCurrentPage(page);
+        setTitle(title);
+    }
+
+    console.log("auth verification: " + authVerification);
 
     return (
         <nav>
             <ul>
-                <li key="teams" ><Link onClick={() => setCurrentPage("teams")} to="/teams">Spelare</Link></li>
-                <li key="matches" ><Link onClick={() => setCurrentPage("matches")} to="/matches">Matcher</Link></li>
-                {verifyAuthentication(authToken) ? showAdminOptions(currentPage) : <li key="login" id="login" onClick={popupNav}>Logga In</li>}
+                <li key="teams" ><Link onClick={() => changePage("teams", "Lag")} to="/teams">Spelare</Link></li>
+                <li key="matches" ><Link onClick={() => changePage("matches", "Matcher")} to="/matches">Matcher</Link></li>
+                {authVerification ? showAdminOptions(currentPage) : <li key="login" id="login" onClick={popupNav}>Logga In</li>}
             </ul>
         </nav>
     )

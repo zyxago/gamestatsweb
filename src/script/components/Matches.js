@@ -10,7 +10,7 @@ import {
     Redirect
 } from "react-router-dom";
 
-export default function Matches({setCurrentpage}) {
+export default function Matches({setCurrentpage, setTitle}) {
 
     let [clickedMatch, setClickedMatch] = React.useState(undefined);
     let [tableContent, setTableContent] = React.useState(undefined);
@@ -21,6 +21,7 @@ export default function Matches({setCurrentpage}) {
     function navigateToMatch(match){
         setClickedMatch(match);
         setCurrentpage(`matches/${match.gameId}`);
+        setTitle(`Match-${match.gameId}`);
     }
 
     //Gets matchTables content from DB
@@ -32,7 +33,6 @@ export default function Matches({setCurrentpage}) {
                     <td><Link onClick={() => navigateToMatch(match)} to={`matches/${match.gameId}`}>{match.gameId}</Link></td>
                     <td>{match.homeTeam}</td>
                     <td>{match.awayTeam}</td>
-                    <td>bo5</td>
                     <td>{match.homeScore}</td>
                     <td>{match.awayScore}</td>
                     <td>{match.winner}</td>
@@ -52,7 +52,6 @@ export default function Matches({setCurrentpage}) {
                             <th>Match</th>
                             <th>Spelare 1</th>
                             <th>Spelare 2</th>
-                            <th>Typ</th>
                             <th>Sets vunna spelare 1</th>
                             <th>Sets vunna spelare 2</th>
                             <th>Vinnare</th>
