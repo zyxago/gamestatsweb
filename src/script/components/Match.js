@@ -1,14 +1,17 @@
 import React from "react";
 import {Table} from "react-bulma-components";
 
-export default function Match({match}){
+export default function Match({match, setTitle}){
+
+    setTitle(`Match-${match.gameId}`);
+
     return (
         <main>
             <Table>
                 <thead>
                     <tr>
                         <th>Spelare</th>
-                        <th>Sets Vunna</th>
+                        <th>Vunna Poäng</th>
                     </tr>
                 </thead>
                 <tbody>

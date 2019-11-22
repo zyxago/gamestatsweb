@@ -1,7 +1,7 @@
 import {fetcher, requestHandler} from "./dataHandler";
 
 export class Match {
-    constructor(gameId, homeId, homeScore, homeTeam, awayId, awayScore, awayTeam, winner) {
+    constructor(gameId, homeId, homeScore, homeTeam, awayId, awayScore, awayTeam, winner, scoreId) {
         this.gameId = gameId;
         this.homeId = homeId;
         this.homeScore = homeScore;
@@ -10,26 +10,27 @@ export class Match {
         this.awayScore = awayScore;
         this.awayTeam = awayTeam;
         this.winner = winner;
+        this.scoreId = scoreId;
     }
 }
 
 export async function getMatches() {
     let matches = [];
     for (const match of await fetcher("matches")) {
-        matches.push(new Match(match.gameId, match.homeId, match.homeScore, match.homeTeam, match.awayId, match.awayScore, match.awayTeam, match.winner));
+        matches.push(new Match(match.gameId, match.homeId, match.homeScore, match.homeTeam, match.awayId, match.awayScore, match.awayTeam, match.winner, match.scoreId));
     }
     return matches;
 }
 
 export async function getMatch(id) {
     let match = await fetcher(`match/${id}`);
-    return new Match(match.gameId, match.homeId, match.homeScore, match.homeTeam, match.awayId, match.awayScore, match.awayTeam, match.winner);
+    return new Match(match.gameId, match.homeId, match.homeScore, match.homeTeam, match.awayId, match.awayScore, match.awayTeam, match.winner, match.scoreId);
 }
 
 export async function getTeamMatches(id) {
     let matches = [];
     for (const match of await fetcher(`teamMatches/${id}`)) {
-        matches.push(new Match(match.gameId, match.homeId, match.homeScore, match.homeTeam, match.awayId, match.awayScore, match.awayTeam, match.winner));
+        matches.push(new Match(match.gameId, match.homeId, match.homeScore, match.homeTeam, match.awayId, match.awayScore, match.awayTeam, match.winner, match.scoreId));
     }
     return matches;
 }

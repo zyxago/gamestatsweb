@@ -10,22 +10,21 @@ import {
     Redirect
 } from "react-router-dom";
 
-export default function Matches({setCurrentpage, setTitle}) {
+export default function Matches({setCurrentpage, setTitle, lastChange}) {
 
     let [clickedMatch, setClickedMatch] = React.useState(undefined);
     let [tableContent, setTableContent] = React.useState(undefined);
-    if (tableContent === undefined) {
-        getContent(setTableContent);
-    }
+    React.useEffect(()=>{getContent()}, [lastChange]);
+
+    setTitle("Matcher");
 
     function navigateToMatch(match){
         setClickedMatch(match);
         setCurrentpage(`matches/${match.gameId}`);
-        setTitle(`Match-${match.gameId}`);
     }
 
     //Gets matchTables content from DB
-    async function getContent(setTableContent) {
+    async function getContent() {
         const matches = await getMatches();
         const matchTable = matches.map((match) => {
             return (
@@ -50,10 +49,10 @@ export default function Matches({setCurrentpage, setTitle}) {
                     <thead>
                         <tr>
                             <th>Match</th>
-                            <th>Spelare 1</th>
-                            <th>Spelare 2</th>
-                            <th>Sets vunna spelare 1</th>
-                            <th>Sets vunna spelare 2</th>
+                            <th>Hemma</th>
+                            <th>Borta</th>
+                            <th>Poäng Hemma</th>
+                            <th>Poäng Borta</th>
                             <th>Vinnare</th>
                         </tr>
                     </thead>
@@ -71,7 +70,7 @@ export default function Matches({setCurrentpage, setTitle}) {
     return (
         <Switch>
             <Route exact path="/matches">{matchTable}</Route>
-            {clickedMatch && <Route path="/matches/"><Match match={clickedMatch} /></Route>}
+            {clickedMatch && <Route path="/matches/"><Match match={clickedMatch} setTitle={setTitle}/></Route>}
             <Route><Redirect to="/matches"/></Route>
         </Switch>
     )

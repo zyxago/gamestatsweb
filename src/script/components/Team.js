@@ -2,15 +2,14 @@ import React from "react";
 import { Table, Card } from "react-bulma-components";
 import { getTeamMatches } from "../logic/match";
 
-export default function Team({ team }) {
+export default function Team({ team, lastChange, setTitle}) {
     let [stats, setStats] = React.useState(undefined);
     let [matches, setMatches] = React.useState(undefined);
-    if (stats === undefined || matches === undefined) {
-        getContent(setStats, setMatches);
-    }
+    React.useEffect(()=>{getContent()}, [lastChange])
 
+    setTitle(`Spelare-${team.name}`);
 
-    async function getContent(setStats, setMatches) {
+    async function getContent() {
         const matches = await getTeamMatches(team.id);
         let JSXmatches = matches.map((match) => {
             return (
@@ -26,17 +25,16 @@ export default function Team({ team }) {
                 </tr>
             )
         })
+
         let setsPlayed = calcSetsPlayed(matches, team.name)
         let stats = (
             <Card.Content>
-                <p>Procent Vunna Matcher: {(matches.filter((match) => { return match.winner === team.name }).length / matches.length) * 100}%</p>
+                <p>Procent Vunna Matcher: {Math.round((matches.filter((match) => { return match.winner === team.name }).length / matches.length) * 100)}%</p>
                 <p>Matcher Spelade: {matches.length}</p>
                 <p>Procent Vunna Sets: {setsWinrate(matches, setsPlayed, team.name)}%</p>
                 <p>Antal Sets Spelade: {setsPlayed}</p>
             </Card.Content>
         )
-        setStats(stats)
-        setMatches(JSXmatches);
 
         function calcSetsPlayed(matches, teamName) {
             let setsPlayed = 0;
@@ -58,6 +56,8 @@ export default function Team({ team }) {
             }
             return Math.round((wonSets / setsPlayed) * 100);
         }
+        setStats(stats)
+        setMatches(JSXmatches);
 
     }
 

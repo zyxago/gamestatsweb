@@ -1,7 +1,7 @@
 import React from "react";
 import { getTeams } from "../logic/team";
 import Team from "./Team";
-import {Table} from "react-bulma-components";
+import { Table } from "react-bulma-components";
 import {
     Route,
     Switch,
@@ -10,18 +10,17 @@ import {
 } from "react-router-dom";
 import "../../css/Team.css";
 
-export default function Teams({setCurrentpage, setTitle}) {
+export default function Teams({ setCurrentpage, setTitle, lastChange }) {
 
     let [clickedTeam, setClickedTeam] = React.useState(undefined);
     let [tableContent, setTableContent] = React.useState(undefined);
-    if (tableContent === undefined) {
-        getContent(setTableContent);
-    }
+    React.useEffect(()=>{getContent()}, [lastChange]);
 
-    function navigateToTeam(team){
+    setTitle("Spelare");
+
+    function navigateToTeam(team) {
         setClickedTeam(team);
         setCurrentpage(`teams/${team.id}`);
-        setTitle(team.name);
     }
 
     //Display all teams
@@ -48,7 +47,7 @@ export default function Teams({setCurrentpage, setTitle}) {
     }
 
     //Gets teamTable content from DB
-    async function getContent(setTableContent) {
+    async function getContent() {
         const teams = await getTeams();
         const teamTable = teams.map((team) => {
             return (
@@ -68,8 +67,8 @@ export default function Teams({setCurrentpage, setTitle}) {
     return (
         <Switch>
             <Route exact path="/teams">{teamsTable}</Route>
-            {clickedTeam && <Route path="/teams/"><Team team={clickedTeam} /></Route>}
-            <Route><Redirect to="/teams"/></Route>
+            {clickedTeam && <Route path="/teams/"><Team team={clickedTeam} lastChange={lastChange} setTitle={setTitle}/></Route>}
+            <Route><Redirect to="/teams" /></Route>
         </Switch>
     )
 }

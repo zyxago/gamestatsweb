@@ -1,6 +1,5 @@
 export async function verifyAuthentication(authToken, setVerification) {
-    console.log("From verifier: " + authToken);
-    const res = await fetch("/authenticate/token", {
+    const res = await fetch("/api/authenticate/token", {
         method: "GET",
         headers: {
             'Authorization': authToken
@@ -12,13 +11,12 @@ export async function verifyAuthentication(authToken, setVerification) {
 
 export async function getAuthToken(username, password) {
     const authString = `Basic ${btoa(username + ":" + password)}`;
-    const res = await fetch("/authenticate", {
+    const res = await fetch("/api/authenticate", {
         method: "GET",
         headers: {
             'Authorization': authString
         }
     });
     const data = await res.text();
-    console.log(data);
     return data;
 }

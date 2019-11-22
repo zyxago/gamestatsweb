@@ -6,7 +6,7 @@ async function fetchTeams(setTeams) {
     setTeams(data);
 }
 
-export default function RemoveTeamCard({ authToken }) {
+export default function RemoveTeamCard({ authToken, update}) {
 
     let [content, setContent] = React.useState(undefined);
     let [teams, setTeams] = React.useState(undefined);
@@ -15,23 +15,24 @@ export default function RemoveTeamCard({ authToken }) {
     }
 
     function teamNames() {
-        return teams.map((team) => <option>{team.name}</option>);
+        return teams.map((team) => <option key={`team${team.id}`}>{team.name}</option>);
     }
 
     function constructContent(name) {
         let team = teams.find((team) => team.name === name);
         let content = [
-            <p>Matcher spelade: {team.matchesPlayed}</p>,
-            <p>Vunna Matcher: {team.matchesWon}</p>,
-            <p>Vunna poäng: {team.wins}</p>,
-            <p>Förlorade poäng: {team.losses}</p>
+            <p key="cardTeamMatchesPlayed">Matcher spelade: {team.matchesPlayed}</p>,
+            <p key="cardTeamMatchesWon">Vunna Matcher: {team.matchesWon}</p>,
+            <p key="cardTeamWins">Vunna poäng: {team.wins}</p>,
+            <p key="cardTeamLosses">Förlorade poäng: {team.losses}</p>
         ];
         setContent(content);
     }
 
     function submitTeam() {
-        let id = document.getElementById("cardTeamNames").value;
+        let id = teams.find((team)=> team.name === document.getElementById("cardTeamNames").value).id;
         removeTeam(id, authToken);
+        update();
     }
 
     return (

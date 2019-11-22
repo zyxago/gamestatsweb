@@ -10,7 +10,7 @@ import AddMatchCard from "./popupCards/MatchCards/AddMatch";
 import RemoveMatchCard from "./popupCards/MatchCards/RemoveMatch";
 import EditMatchCard from "./popupCards/MatchCards/EditMatch";
 
-export default function Popup({ show, location, setShow, setAuthToken, authToken }) {
+export default function Popup({ show, location, setShow, setAuthToken, authToken, update}) {
 
     let title;
     let content;
@@ -19,7 +19,7 @@ export default function Popup({ show, location, setShow, setAuthToken, authToken
         switch (location) {
             case "login":
                 title = "Logga in";
-                content = <LoginCard setToken={setAuthToken} />;
+                content = <LoginCard setToken={setAuthToken} update={update}/>;
                 break;
             case "logout":
                 title = "Logga ut";
@@ -27,27 +27,27 @@ export default function Popup({ show, location, setShow, setAuthToken, authToken
                 break;
             case "editMatch":
                 title = "Redigera Match";
-                content = <EditMatchCard authToken={authToken} />;
+                content = <EditMatchCard authToken={authToken} update={update}/>;
                 break;
             case "addMatch":
                 title = "Lägg till match";
-                content = <AddMatchCard authToken={authToken} />;
+                content = <AddMatchCard authToken={authToken} update={update}/>;
                 break;
             case "removeMatch":
                 title = "Ta bort match";
-                content = <RemoveMatchCard authToken={authToken} />;
+                content = <RemoveMatchCard authToken={authToken} update={update}/>;
                 break;
             case "editTeam":
                 title = "Redigera team";
-                content = <EditTeamCard authToken={authToken} />;
+                content = <EditTeamCard authToken={authToken} update={update}/>;
                 break;
             case "addTeam":
                 title = "Lägg till team";
-                content = <AddTeamCard authToken={authToken} />
+                content = <AddTeamCard authToken={authToken} update={update}/>
                 break;
             case "removeTeam":
                 title = "Ta bort team";
-                content = <RemoveTeamCard authToken={authToken} />
+                content = <RemoveTeamCard authToken={authToken} update={update}/>
                 break;
             default:
                 break;

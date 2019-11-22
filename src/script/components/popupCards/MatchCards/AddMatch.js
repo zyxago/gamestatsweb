@@ -2,7 +2,7 @@ import React from "react";
 import { addMatch, Match } from "../../../logic/match";
 import { getTeams } from "../../../logic/team";
 
-export default function AddMatchCard({ authToken }) {
+export default function AddMatchCard({ authToken, update }) {
 
     async function fetchTeams(setTeams) {
         let data = await getTeams();
@@ -14,6 +14,10 @@ export default function AddMatchCard({ authToken }) {
         fetchTeams(setTeams);
     }
 
+    function teamNames() {
+        return teams.map((team) => <option key={`team${team.id}`}>{team.name}</option>);
+    }
+
     function submitMatch() {
         let match = new Match();
         match.homeId = teams.find((team) => team.name === document.getElementById("cardHomeTeam").value).id;
@@ -21,27 +25,31 @@ export default function AddMatchCard({ authToken }) {
         match.homeScore = document.getElementById("cardScoreHome").value;
         match.awayScore = document.getElementById("cardScoreAway").value;
         addMatch(match, authToken);
+        update();
     }
 
     return (
-        <form onSubmit={(e) => e.preventDefault()}>
-            <p>
-                <label htmlFor="cardHomeTeam">Hemma lag: </label>
-                <input id="cardHomeTeam" type="text" />
-            </p>
-            <p>
-                <label htmlFor="cardAwayTeam">Borta lag: </label>
-                <input id="cardAwayTeam" type="text" />
-            </p>
-            <p>
-                <label htmlFor="cardScoreHome">Poäng hemma: </label>
-                <input id="cardScoreHome" type="number" />
-            </p>
-            <p>
-                <label htmlFor="cardScoreAway">Poäng hemma: </label>
-                <input id="cardScoreAway" type="number" />
-            </p>
-            <button onClick={submitMatch}>Lägg till match</button>
-        </form>
+        <div>
+            {teams && <form onSubmit={(e) => e.preventDefault()}>
+                <p>
+                    <label htmlFor="cardHomeTeam">Hemma lag: </label>
+                    <select id="cardHomeTeam" type="text">{teamNames()}</select>
+                </p>
+                <p>
+                    <label htmlFor="cardAwayTeam">Borta lag: </label>
+                    <select id="cardAwayTeam" type="text">{teamNames()}</select>
+                </p>
+                <p>
+                    <label htmlFor="cardScoreHome">Poäng hemma: </label>
+                    <input id="cardScoreHome" type="number" />
+                </p>
+                <p>
+                    <label htmlFor="cardScoreAway">Poäng hemma: </label>
+                    <input id="cardScoreAway" type="number" />
+                </p>
+                <button onClick={submitMatch}>Lägg till match</button>
+            </form>}
+        </div>
+
     )
 }

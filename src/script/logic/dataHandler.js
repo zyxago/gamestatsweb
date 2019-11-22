@@ -1,5 +1,5 @@
 export async function fetcher(path){
-    const response = await fetch("/"+path, {
+    const response = await fetch("/api/"+path, {
         method: "GET"
     });
     const data = await response.json();
@@ -7,7 +7,7 @@ export async function fetcher(path){
 }
 
 export async function requestHandler(path, method, authToken, data){
-    const response = await fetch("/"+path, {
+    const response = await fetch("/api/"+path, {
         method: method,
         headers: {
             'Content-Type': "application/json",

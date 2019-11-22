@@ -2,12 +2,13 @@ import React from "react";
 import { addTeam, Team } from "../../../logic/team";
 
 
-export default function AddTeamCard({ authToken }) {
+export default function AddTeamCard({ authToken, update}) {
 
     function submitTeam() {
         let team = new Team();
         team.name = document.getElementById("cardTeamName").value;
         addTeam(team, authToken);
+        update();
     }
 
     return (

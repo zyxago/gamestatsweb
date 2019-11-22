@@ -6,7 +6,7 @@ async function fetchMatches(setMatches) {
     setMatches(data);
 }
 
-export default function RemoveMatchCard({ authToken }) {
+export default function RemoveMatchCard({ authToken, update}) {
 
     let [content, setContent] = React.useState(undefined);
     let [matches, setMatches] = React.useState(undefined);
@@ -17,10 +17,10 @@ export default function RemoveMatchCard({ authToken }) {
     function constructContent(id) {
         let match = matches.find((match) => match.gameId == id);
         let content = [
-            <p>Hemma lag: {match.homeTeam}</p>,
-            <p>Poäng hemma: {match.homeScore}</p>,
-            <p>Borta lag: {match.awayTeam}</p>,
-            <p>Poäng borta: {match.awayScore}</p>
+            <p key="cardMatchHomeTeam">Hemma lag: {match.homeTeam}</p>,
+            <p key="cardMatchHomeScore">Poäng hemma: {match.homeScore}</p>,
+            <p key="cardMatchAwayTeam">Borta lag: {match.awayTeam}</p>,
+            <p key="cardMatchAwayScore">Poäng borta: {match.awayScore}</p>
         ];
         setContent(content);
     }
@@ -28,10 +28,11 @@ export default function RemoveMatchCard({ authToken }) {
     function submitMatch() {
         let id = document.getElementById("cardMatchId").value;
         removeMatch(id, authToken);
+        update();
     }
 
     function matchIds() {
-        return matches.map((match) => <option>{match.gameId}</option>);
+        return matches.map((match) => <option key={`match${match.gameId}`}>{match.gameId}</option>);
     }
 
     return (

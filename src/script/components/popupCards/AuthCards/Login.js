@@ -8,6 +8,7 @@ export default function LoginCard(props) {
         let upass = document.getElementById("password").value;
         let token = await getAuthToken(uname, upass);
         props.setToken(token);
+        props.update();
     }
 
     return (

@@ -1,6 +1,6 @@
 import React from "react";
-import { getMatches,  editMatch, Match} from "../../../logic/match";
-import {getTeams} from "../../../logic/team";
+import { getMatches, editMatch, Match } from "../../../logic/match";
+import { getTeams } from "../../../logic/team";
 
 async function fetchMatches(setMatches) {
     let data = await getMatches();
@@ -11,7 +11,7 @@ async function fetchTeams(setTeams) {
     setTeams(data);
 }
 
-export default function EditMatchCard({ authToken }) {
+export default function EditMatchCard({ authToken, update }) {
 
     let [content, setContent] = React.useState(undefined);
     let [matches, setMatches] = React.useState(undefined);
@@ -21,12 +21,19 @@ export default function EditMatchCard({ authToken }) {
         fetchTeams(setTeams);
     }
 
+    console.log(content);
+
     function constructContent(id) {
+
+        function teamNames() {
+            return teams.map((team) => <option key={`team${team.id}`}>{team.name}</option>);
+        }
+
         let match = matches.find((match) => match.gameId == id);
         let content = [
             <p key="homeTeam">
                 <label htmlFor="cardHomeTeam">Hemma lag: </label>
-                <input id="cardHomeTeam" type="text" defaultValue={match.homeTeam} />
+                <select id="cardHomeTeam" type="text" defaultValue={match.homeTeam}>{teamNames()}</select>
             </p>,
             <p key="homeScore">
                 <label htmlFor="cardScoreHome">Poäng hemma: </label>
@@ -34,7 +41,7 @@ export default function EditMatchCard({ authToken }) {
             </p>,
             <p key="awayTeam">
                 <label htmlFor="cardAwayTeam">Borta lag: </label>
-                <input id="cardAwayTeam" type="text" defaultValue={match.awayTeam} />
+                <select id="cardAwayTeam" type="text" defaultValue={match.awayTeam}>{teamNames()}</select>
             </p>,
             <p key="awayScore">
                 <label htmlFor="cardScoreAway">Poäng borta: </label>
@@ -46,22 +53,24 @@ export default function EditMatchCard({ authToken }) {
 
     function submitMatch() {
         let match = new Match();
-        match.homeId = teams.find((team) => team.name == document.getElementById("cardHomeTeam").value).id;
-        match.awayId = teams.find((team) => team.name == document.getElementById("cardAwayTeam").value).id;
+        match.homeId = teams.find((team) => team.name === document.getElementById("cardHomeTeam").value).id;
+        match.awayId = teams.find((team) => team.name === document.getElementById("cardAwayTeam").value).id;
         match.homeScore = document.getElementById("cardScoreHome").value;
         match.awayScore = document.getElementById("cardScoreAway").value;
+        match.scoreId = matches.find((match) => match.gameId == document.getElementById("cardMatchId").value).scoreId;
         editMatch(match, authToken);
+        update();
     }
 
     function matchIds() {
-        return matches.map((match) => <option>{match.gameId}</option>);
+        return matches.map((match) => <option key={`match${match.gameId}`}>{match.gameId}</option>);
     }
 
     return (
         <div>
             {matches && <form onSubmit={(e) => e.preventDefault()}>
                 <p>
-                    <label htmlFor="id">Match id: </label>
+                    <label htmlFor="cardMatchId">Match id: </label>
                     <select id="cardMatchId" onChange={(e) => constructContent(e.target.value)}>{matchIds()}</select>
                 </p>
                 {content}
