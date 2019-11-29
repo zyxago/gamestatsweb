@@ -10,11 +10,18 @@ import {
 } from "react-router-dom";
 import "../../css/Team.css";
 
+/**
+ * Display team(s) in a table
+ * @param {function} setCurrentpage a function that will be called when user navigates
+ * @param {function} setTitle a function that will set the pageheader title
+ * @param {int} lastChange when changed the content will be reloaded
+ * 
+ */
 export default function Teams({ setCurrentpage, setTitle, lastChange }) {
 
     let [clickedTeam, setClickedTeam] = React.useState(undefined);
     let [tableContent, setTableContent] = React.useState(undefined);
-    React.useEffect(()=>{getContent()}, [lastChange]);
+    React.useEffect(() => { getContent() }, [lastChange]);
 
     setTitle("Spelare");
 
@@ -22,8 +29,7 @@ export default function Teams({ setCurrentpage, setTitle, lastChange }) {
         setClickedTeam(team);
         setCurrentpage(`teams/${team.id}`);
     }
-
-    //Display all teams
+    
     function teamsTable() {
         return (
             <main>
@@ -46,7 +52,9 @@ export default function Teams({ setCurrentpage, setTitle, lastChange }) {
         )
     }
 
-    //Gets teamTable content from DB
+    /**
+     * Gets teamTable content from database
+     */
     async function getContent() {
         const teams = await getTeams();
         const teamTable = teams.map((team) => {
@@ -67,7 +75,7 @@ export default function Teams({ setCurrentpage, setTitle, lastChange }) {
     return (
         <Switch>
             <Route exact path="/teams">{teamsTable}</Route>
-            {clickedTeam && <Route path="/teams/"><Team team={clickedTeam} lastChange={lastChange} setTitle={setTitle}/></Route>}
+            {clickedTeam && <Route path="/teams/"><Team team={clickedTeam} lastChange={lastChange} setTitle={setTitle} /></Route>}
             <Route><Redirect to="/teams" /></Route>
         </Switch>
     )

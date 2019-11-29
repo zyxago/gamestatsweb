@@ -21,14 +21,19 @@ export default function App() {
     let [title, setTitle] = React.useState("");
     let [lastChange, setLastChange] = React.useState(0);
 
-    //Handles whitch popup card should be displayed
+    /**
+     * Handles whitch popup card should be displayed
+     * @param {Event} e 
+     */
     function popupNavigation(e) {
         let location = e.currentTarget.id;
         setPopupShow(true);
         setPopupLocation(location);
     }
 
-    //When changes has been made to rows in tables this function is called to update the table information
+    /**
+     * When changes has been made to rows in tables this function is called to update the table information
+     */
     function updateLastChange() {
         setLastChange((oldValue) => oldValue + 1);
         setPopupShow(false);

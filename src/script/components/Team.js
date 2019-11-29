@@ -2,13 +2,22 @@ import React from "react";
 import { Table, Card } from "react-bulma-components";
 import { getTeamMatches } from "../logic/match";
 
-export default function Team({ team, lastChange, setTitle}) {
+/**
+ * 
+ * @param {Team} team the team to display info about
+ * @param {int} lastChange when changed the content will be reloaded
+ * @param {function} setTitle a function that will set the pageheader title
+ */
+export default function Team({ team, lastChange, setTitle }) {
     let [stats, setStats] = React.useState(undefined);
     let [matches, setMatches] = React.useState(undefined);
-    React.useEffect(()=>{getContent()}, [lastChange])
+    React.useEffect(() => { getContent() }, [lastChange])
 
     setTitle(`Spelare-${team.name}`);
-
+    
+    /**
+     * Gets team matches content from database
+     */
     async function getContent() {
         const matches = await getTeamMatches(team.id);
         let JSXmatches = matches.map((match) => {
@@ -36,7 +45,7 @@ export default function Team({ team, lastChange, setTitle}) {
             </Card.Content>
         )
 
-        function calcSetsPlayed(matches, teamName) {
+        function calcSetsPlayed(matches) {
             let setsPlayed = 0;
             matches.map((match) => setsPlayed += match.homeScore + match.awayScore)
             return setsPlayed;

@@ -10,6 +10,12 @@ import {
     Redirect
 } from "react-router-dom";
 
+/**
+ * Display match(es) in a table
+ * @param {function} setCurrentpage a function that will be called when user navigates
+ * @param {function} setTitle a function that will set the pageheader title
+ * @param {int} lastChange when changed the content will be reloaded
+ */
 export default function Matches({setCurrentpage, setTitle, lastChange}) {
 
     let [clickedMatch, setClickedMatch] = React.useState(undefined);
@@ -23,7 +29,9 @@ export default function Matches({setCurrentpage, setTitle, lastChange}) {
         setCurrentpage(`matches/${match.gameId}`);
     }
 
-    //Gets matchTables content from DB
+    /**
+     * Gets matchTables content from database
+     */
     async function getContent() {
         const matches = await getMatches();
         const matchTable = matches.map((match) => {
@@ -41,7 +49,6 @@ export default function Matches({setCurrentpage, setTitle, lastChange}) {
         setTableContent(matchTable);
     }
 
-    //Display all matches
     function matchTable(){
         return (
             <main>

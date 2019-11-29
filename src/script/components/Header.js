@@ -1,6 +1,9 @@
 import React from "react";
 import "../../css/Header.css";
-
+/**
+ * 
+ * @param {String} title
+ */
 export default function Header({title}){
     return (
         <header className="mainHead">
